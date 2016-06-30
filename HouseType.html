@@ -44,6 +44,14 @@
 	<button type="button" onclick="recordNumber()">Submit</button>
 	</form>
 	
+
+	<p>The type of the property is <input type="text" id="propType"></p>
+	<p>Taxable income is(business income(loss)) <input type="text" id="taxInc"></p>
+	<p>Itemize deduction allowed is <input type="text" id="ite"></p>
+	<p id="sub">Mortgage Interest Paid<input type="text" id="mortIt"></p>
+	<p id="sub">Property/Real Estate Taxes Paid<input type="text" id="rtIt"></p>
+	<p>Deduction carry forward is <input type="text" id="carr"></p>
+</body>
 	<script>
 	function recordNumber()
 	{
@@ -141,11 +149,4 @@
 	document.getElementById("rtIt").value=realTaxItem
 	}
 	</script>
-	<p>The type of the property is <input type="text" id="propType"></p>
-	<p>Taxable income is(business income(loss)) <input type="text" id="taxInc"></p>
-	<p>Itemize deduction allowed is <input type="text" id="ite"></p>
-	<p id="sub">Mortgage Interest Paid<input type="text" id="mortIt"></p>
-	<p id="sub">Property/Real Estate Taxes Paid<input type="text" id="rtIt"></p>
-	<p>Deduction carry forward is <input type="text" id="carr"></p>
-</body>
 </html>

@@ -1,0 +1,23 @@
+html{
+	padding:10px;
+}
+
+.iconimg{
+	width:100px;
+	display: block;
+	margin-left:auto;
+	margin-right: auto;
+}
+.fpl{
+	text-align: center;
+}
+.col-md-4{
+	background-color: #eee;
+	margin-left:15px;
+    width:31.6%;
+}
+.githubIcon{
+	display:block;
+	margin-top: auto;
+	margin-bottom:auto;
+}

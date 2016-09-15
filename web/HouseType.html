@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+    <title>Your Tax Assistant: House Type</title>
+<style type="text/css">
+#sub{text-indent: 2em;}
+</style>
+</head>
+
+<body>
+
+    <h1>Determining House Type</h1>
+    <p>Hello, I'm your Tax Assistant. I can determine the type of your rented house/property type and determine deductions, itemizations, and taxable rental income.</p>
+    <br />
+	<form>
+	How many days in this year did you rent the house?
+	<input type="number" id="rentDays" />
+	<br />
+	<br />
+	How many days in this year did your household use this house personally: 
+	<input type="number" id="personalDays" />
+	<br />
+	<br />
+	What's the daily rate of rentals: 
+	<input type="number" id="rentDailyRate" />
+	<br />
+	<br />
+	What's the mortgage interest paid: 
+	<input type="number" id="interest" />
+	<br />
+	<br />
+	What's the real estate taxes paid: 
+	<input type="number" id="realTax" />
+	<br />
+	<br />
+	What's the depreciation expense: 
+	<input type="number" id="depreciation" />
+	<br />
+	<br />
+	What's the utility and maintenance expense: 
+	<input type="number" id="utilMain" />
+	<br />
+	<br />
+	<button type="button" onclick="recordNumber()">Submit</button>
+	</form>
+	
+
+	<p>The type of the property is <input type="text" id="propType"></p>
+	<p>Taxable income is(business income(loss)) <input type="text" id="taxInc"></p>
+	<p>Itemize deduction allowed is <input type="text" id="ite"></p>
+	<p id="sub">Mortgage Interest Paid<input type="text" id="mortIt"></p>
+	<p id="sub">Property/Real Estate Taxes Paid<input type="text" id="rtIt"></p>
+	<p>Deduction carry forward is <input type="text" id="carr"></p>
+</body>
+	<script>
+	function recordNumber()
+	{
+	var rentDays=document.getElementById("rentDays").value
+	var personalDays=document.getElementById("personalDays").value
+	var rentDailyRate=document.getElementById("rentDailyRate").value
+	var interest=document.getElementById("interest").value
+	var realTax=document.getElementById("realTax").value
+	var utilMain=document.getElementById("utilMain").value
+	var depreciation=document.getElementById("depreciation").value
+	
+	var interestItem
+	var realTaxItem
+	var interestDed
+	var realTaxDed
+	var utilMainDed
+	var depreDed
+	
+	var taxableIncome
+	var carryforward=0
+	var itemize
+	//var deductible
+	var allocateRate
+	
+	if(rentDays<=14)
+	{
+	document.getElementById("propType").value="Primary Personal"
+	taxableIncome=0
+	itemize=eval(interest)+eval(realTax)
+	interestItem=interest
+	realTaxItem=realTax
+	
+	}
+	else if(personalDays<=Math.max(14,0.1*rentDays))
+	{
+	document.getElementById("propType").value="Primary Rental"
+	allocateRate=rentDays/(eval(rentDays)+eval(personalDays))
+	
+	itemize=Math.round(realTax*(1-allocateRate))
+	
+	realTaxItem=itemize
+	interestItem=0
+	interestDed=Math.round(interest*allocateRate)
+	
+	realTaxDed=Math.round(realTax*allocateRate)
+	
+	utilMainDed=Math.round(utilMain*allocateRate)
+	depreDed=Math.round(depreciation*allocateRate)
+	
+	taxableIncome=eval(rentDailyRate*rentDays)-(interestDed+realTaxDed+utilMainDed+depreDed)
+
+	}
+	else
+	{
+	document.getElementById("propType").value="Rental/Personal Mixed Use"
+	allocateRate=rentDays/(eval(rentDays)+eval(personalDays))
+	taxableIncome=rentDailyRate*rentDays-Math.round((interest+realTax)*allocateRate)
+	
+	realTaxItem=Math.round(realTax*(1-allocateRate))
+	interestItem=Math.round(interest*(1-allocateRate))
+	itemize=realTaxItem+interestItem
+	if(taxableIncome<0)
+	{//if negative after interest tax
+	carryforward=Math.abs(taxableIncome)
+
+	taxableIncome=0
+	}
+	else
+	{//if positive after interest tax
+	taxableIncome=taxableIncome-Math.round(utilMain*allocateRate)
+	if(taxableIncome<0)
+	{//if negative after expense
+	carryforward=carryforward+Math.abs(taxableIncome)
+	
+	taxableIncome=0
+	}
+	else
+	{//if positive after depreciation
+	taxableIncome=Math.round(taxableIncome-depreciation*allocateRate)
+	if(taxableIncome<0)
+	{
+	carryforward=carryforward+Math.abs(taxableIncome)
+	
+	taxableIncome=0
+	}
+	
+	}
+	}
+
+	}
+	document.getElementById("taxInc").value=taxableIncome
+	document.getElementById("ite").value=itemize
+	document.getElementById("carr").value=carryforward
+	document.getElementById("mortIt").value=interestItem
+	document.getElementById("rtIt").value=realTaxItem
+	}
+	</script>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Like Kind Exchange</title>
+
+	<meta name="description" content="Source code generated using layoutit.com">
+	<meta name="author" content="LayoutIt!">
+
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<nav class="navbar navbar-default" role="navigation">
+					<div class="navbar-header">
+						
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+						</button> <a class="navbar-brand" href="#">YourTaxAssistant</a>
+					</div>
+					
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li class="active">
+								<a href="tool-list.html">Tool List</a>
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#">Action</a>
+									</li>
+									<li>
+										<a href="#">Another action</a>
+									</li>
+									<li>
+										<a href="#">Something else here</a>
+									</li>
+									<li class="divider">
+									</li>
+									<li>
+										<a href="#">Separated link</a>
+									</li>
+									<li class="divider">
+									</li>
+									<li>
+										<a href="#">One more separated link</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a href="https://github.com/ruoyinghao/YourTaxAssistant"><img class="githubIcon" width="30px" src="image/github.png"></a>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#">Action</a>
+									</li>
+									<li>
+										<a href="#">Another action</a>
+									</li>
+									<li>
+										<a href="#">Something else here</a>
+									</li>
+									<li class="divider">
+									</li>
+									<li>
+										<a href="#">Separated link</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					
+				</nav>
+				<div class="jumbotron">
+	<h1>Like-Kind Exchange Calculator</h1>
+	<p>Hello! this is your tax assistant.</p>
+	<p>This app can help you determine your tax situation in a property transaction.</p>
+	<p>The transaction should be a like-kind exchange and boot may be involved.</p>
+	<p>You can refer to IRS's rules to learn more about like-kind exchange.</p>
+	<p>But the objective of this app is to let a taxpayer to file tax correctly without knowing tax laws.</p>
+	<p>The model is built based on the regulations for the tax year of 2016. However, regulations on like-kind exchange hasn't change for years.</p>
+
+</br>
+	<div>
+		<p>Now Let's get started</p>
+
+		<form>
+		<p>The adjusted basis for old property:
+		<input id="oldP" type="number"/></p>
+
+		<p>The amount of the boot given (put 0 if no boot):
+		<input id="bootGive" type="number"/></p>
+
+		<p>The fair market value of the new property:
+		<input id="newP" type="number"/></p>
+
+		<p>The amount of the boot received (put 0 if no boot):
+		<input id="bootRecei" type="number"/></p>
+
+		<button type="button" onclick="calculate()">Calculate!</button>
+	</form>
+</br>
+	
+		<p>Realized Gain/loss is (Form 1040 other income): <input type="text" id="real" /></p>
+		
+		<p class="sub">Recognized Gain/loss is:<input type="text" id="recognize" /> </p>
+		<p class="sub">Posponed Gain/loss is:<input type="text" id="posponed" /></p>
+		<p>New basis of the property is:<input type="text" id="basis" /></p>
+		<br/>
+	<p align="center">Have suggestions? Found a bug/error? Interested in more apps? Contact me at <a href="Mailto:ruoyinghao@outlook.com">ruoyinghao@outlook.com</a></P>
+	
+	<hr size=2 style="color: blue;border-style:dotted;width:490"></hr>
+	<p align="center"> &#169; 2016 R."R." Hao, a Computer Science and Accounting student.</P>
+		
+
+	</div>
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/scripts.js"></script>
+	<script>
+	function calculate(){
+		var oldP=eval(document.getElementById("oldP").value);
+		var bootGive=eval(document.getElementById("bootGive").value);
+		var newP=eval(document.getElementById("newP").value);
+		var bootRecei=eval(document.getElementById("bootRecei").value);
+		var real;
+		var recognize;
+		var posponed;
+		var basis;
+
+		real=newP+bootRecei-oldP-bootGive;
+		if(real>0 && bootRecei!=0 ){
+			recognize=Math.min(bootRecei,real);
+
+		}
+		else{
+			recognize=0;
+		}
+		posponed=real-recognize;
+
+		basis=newP-posponed;
+
+
+
+		document.getElementById("real").value=real;
+		document.getElementById("recognize").value=recognize;
+		document.getElementById("posponed").value=posponed;
+		document.getElementById("basis").value=basis;
+	}
+
+
+</script>
+
+</body>
+</html>
